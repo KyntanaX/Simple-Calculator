@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .calculator {
+            width: 300px;
+            margin: 50px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            overflow: hidden;
+        }
+        .button {
+            width: 25%;
+            height: 60px;
+            float: left;
+            font-size: 24px;
+            border: none;
+            border-radius: 0;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #e0e0e0;
+        }
+        #display {
+            width: 100%;
+            height: 60px;
+            text-align: right;
+            font-size: 32px;
+            padding: 5px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            background-color: #eee;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .orange {
+            background-color: #ff8c00;
+            color: #fff;
+        }
+        .orange:hover {
+            background-color: #ff6c00;
+        }
+        .red {
+            background-color: #ff4136;
+            color: #fff;
+        }
+        .red:hover {
+            background-color: #d90000;
+        }
+        .blue {
+            background-color: #0074d9;
+            color: #fff;
+        }
+        .blue:hover {
+            background-color: #0056b3;
+        }
+        .green {
+            background-color: #2ecc40;
+            color: #fff;
+        }
+        .green:hover {
+            background-color: #218c2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input id="display" type="text" readonly>
+        <div class="row">
+            <button class="button orange" onclick="appendToDisplay('7')">7</button>
+            <button class="button orange" onclick="appendToDisplay('8')">8</button>
+            <button class="button orange" onclick="appendToDisplay('9')">9</button>
+            <button class="button red" onclick="operation('+')">+</button>
+        </div>
+        <div class="row">
+            <button class="button orange" onclick="appendToDisplay('4')">4</button>
+            <button class="button orange" onclick="appendToDisplay('5')">5</button>
+            <button class="button orange" onclick="appendToDisplay('6')">6</button>
+            <button class="button red" onclick="operation('-')">-</button>
+        </div>
+        <div class="row">
+            <button class="button orange" onclick="appendToDisplay('1')">1</button>
+            <button class="button orange" onclick="appendToDisplay('2')">2</button>
+            <button class="button orange" onclick="appendToDisplay('3')">3</button>
+            <button class="button red" onclick="operation('*')">*</button>
+        </div>
+        <div class="row">
+            <button class="button orange" onclick="appendToDisplay('0')">0</button>
+            <button class="button orange" onclick="appendToDisplay('.')">.</button>
+            <button class="button green" onclick="clearDisplay()">C</button>
+            <button class="button red" onclick="operation('/')">/</button>
+        </div>
+        <div class="row">
+            <button class="button blue" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let operand1 = '';
+        let operand2 = '';
+        let operator = '';
+
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+            operand1 = '';
+            operand2 = '';
+            operator = '';
+        }
+
+        function operation(op) {
+            operand1 = display.value;
+            operator = op;
+            display.value = '';
+        }
+
+        function calculate() {
+            operand2 = display.value;
+            let result;
+            switch (operator) {
+                case '+':
+                    result = parseFloat(operand1) + parseFloat(operand2);
+                    break;
+                case '-':
+                    result = parseFloat(operand1) - parseFloat(operand2);
+                    break;
+                case '*':
+                    result = parseFloat(operand1) * parseFloat(operand2);
+                    break;
+                case '/':
+                    if (parseFloat(operand2) === 0) {
+                        alert("Error: Division by zero");
+                        clearDisplay();
+                        return;
+                    }
+                    result = parseFloat(operand1) / parseFloat(operand2);
+                    break;
+            }
+            display.value = result;
+            operand1 = result;
+        }
+    </script>
+</body>
+</html>
